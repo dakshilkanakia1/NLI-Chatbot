@@ -15,7 +15,7 @@ with open("doc_metadata.json", "r", encoding="utf-8") as f:
 texts = [item["content"] for item in doc_chunks]
 
 # Embedding model
-model = SentenceTransformer('all-MiniLM-L6-v2')
+model = SentenceTransformer('paraphase-MiniLM-L3-v2')
 
 # OpenRouter config
 OPENROUTER_API_KEY = "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"
