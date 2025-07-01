@@ -6,6 +6,22 @@ from pydantic import BaseModel
 from sentence_transformers import SentenceTransformer
 import requests
 
+# Don't load these immediately - load them when first needed
+index = None
+doc_chunks = None
+texts = None
+model = None
+
+def load_resources():
+    global index, doc_chunks, texts, model
+    if model is None:  # Only load once
+        index = faiss.read_index("doc_index.faiss")
+        with open("doc_metadata.json", "r", encoding="utf-8") as f:
+            doc_chunks = json.load(f)
+        texts = [item["content"] for item in doc_chunks]
+        model = SentenceTransformer('paraphrase-MiniLM-L3-v2')
+
+
 # Load FAISS and metadata
 index = faiss.read_index("doc_index.faiss")
 
@@ -51,6 +67,7 @@ If the answer isn't in the context, say "Sorry, I don't know."
 
 @app.post("/chat")
 async def chat(req: ChatRequest):
+    load_resources()
     query = req.query
     matches = search_faiss(query)
 
