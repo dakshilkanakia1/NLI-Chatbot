@@ -1,0 +1,14 @@
+Open Router - continue with google - ncsu email
+Open Router API key for Mistral AI
+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
+
+
+command to start server
+uvicorn chatbot:app --reload --port 8000
+
+
+command to test in terminal in windows
+curl -X POST http://127.0.0.1:8000/chat -H "Content-Type: application/json" -d "{\"query\": \"QUESTION?\"}"
+
+
+Hosted on Railway.com login continue with google - ncsu email
